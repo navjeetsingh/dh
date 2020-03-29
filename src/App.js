@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage/homepage.component';
-import ShopPage from './pages/ShopPage/ShopPage.component';
+import HomePage from './pages/HomePage/HomePage.component.js';
+import ShopPage from './pages/ShopPage/ShopPage.component.js';
 import './App.css';
 
 function App() {
