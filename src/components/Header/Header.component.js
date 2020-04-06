@@ -7,7 +7,7 @@ import { auth } from '../../firebase/firebase.utils.js';
 import CartIcon from '../CartIcon/CartIcon.component.js';
 import CartDropdown from '../CartDropdown/CartDropdown.component.js'
 
-const Header = ({ currentUser }) => (
+const Header = ({ currentUser, hidden }) => (
 	<div className="Header">
 		<Link className="logo-container" to="/">
 			<Logo className="logo" />
@@ -28,12 +28,14 @@ const Header = ({ currentUser }) => (
 			)}
 			<CartIcon />
 		</div>
-		<CartDropdown />
+		{hidden ? null : 	<CartDropdown />}
+	
 	</div>
 );
 
-const mapStateTpProps = (state) => ({
-	currentUser: state.user.currentUser,
+const mapStateTpProps = ({user: {currentUser}, cart: {hidden}}) => ({
+	currentUser,
+	hidden
 });
 
 export default connect(mapStateTpProps)(Header);
