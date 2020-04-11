@@ -1,20 +1,21 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import CollectionsOverview from '../../components/CollectionOverview/ CollectionsOverview.component.js';
+import { Route } from 'react-router-dom';
+import CollectionsOverview from '../../components/CollectionsOverview/CollectionsOverview.component';
 import CollectionPage from '../../pages/CollectionPage/CollectionPage.component.js';
 import './ShopPage.styles.scss';
 
 const ShopPage = ({ match }) => {
+	console.log(match)
 	return (
 		<div className="ShopPage">
 			<Route
 				exact
 				path={`${match.path}`}
-				render={() => <CollectionsOverview />}
+				component={CollectionsOverview}
 			/>
 			<Route
 				path={`${match.path}/:collectionId`}
-				render={() => <CollectionPage />}
+				component={CollectionPage}
 			/>
 		</div>
 	);
