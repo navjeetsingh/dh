@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import Header from './components/Header/Header.component.js';
 import AuthenticationPage from './pages/AuthenticationPage/AuthenticationPage.component.js';
-import HomePage from './pages/HomePage/HomePage.component.js';
+import HomePage from './pages/HomePage/HomePageCom.component.js';
 import ShopPage from './pages/ShopPage/ShopPage.component.js';
 import CheckoutPage from './pages/CheckoutPage/CheckoutPage.component.js';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils.js';
