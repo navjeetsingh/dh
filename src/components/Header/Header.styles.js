@@ -1,15 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
-/*
-*	If we would like to have a block css we can
-* can create a const like below
-*/
-const OptionsContainerStyles = css`
-	padding: 10px 15px;
-	cursor: pointer;
-`;
-
 export const HeaderContainer = styled.div`
 	height: 70px;
 	width: 100%;
