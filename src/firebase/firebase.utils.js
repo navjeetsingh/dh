@@ -10,7 +10,7 @@ const config = {
 	storageBucket: 'dh-db-1ce1a.appspot.com',
 	messagingSenderId: '694056082416',
 	appId: '1:694056082416:web:22f2539f817b5082739b35',
-	measurementId: 'G-KL43731VJ8'
+	measurementId: 'G-KL43731VJ8',
 };
 
 firebase.initializeApp(config);
@@ -30,14 +30,42 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 				displayName,
 				email,
 				createdAt,
-				...additionalData
+				...additionalData,
 			});
 		} catch (error) {
 			console.log('error creating user', error.message);
 		}
 	}
 
-	return userRef
+	return userRef;
+};
+
+//creating shop collection in Firebase
+export const addCollectionAndDocuments = async (collectionKey, objectToAdd) => {
+	const collectionRef = firestore.collection(collectionKey);
+	const batch = firestore.batch();
+	objectToAdd.forEach((obj) => {
+		const newDocRef = collectionRef.doc();
+		batch.set(newDocRef, obj);
+	});
+	return await batch.commit();
+};
+
+export const convertCollectionSnapshotToMap = (collections) => {
+	const transformedCollection = collections.docs.map((doc) => {
+		const { title, items } = doc.data();
+		return {
+			routeName: encodeURI(title.toLowerCase()),
+			id: doc.id,
+			title,
+			items,
+		};
+	});
+
+	return transformedCollection.reduce((accumulator, collection) => {
+		accumulator[collection.title.toLowerCase()] = collection;
+		return accumulator;
+	}, {});
 };
 
 export const auth = firebase.auth();
