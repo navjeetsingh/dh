@@ -24,17 +24,12 @@ class ShopPage extends Component {
 	componentDidMount() {
 		const { updateCollections } = this.props;
 		const collectionRef = firestore.collection('collections');
-
-
-		fetch('https://firestore.googleapis.com/v1/projects/dh-db-1ce1a/databases/(default)')
-			.then(response => response.json())
-			.then(collections=> console.log(collections))
 		
-		// collectionRef.get().then((snapshot) => {
-		// 	const collectionMap = convertCollectionSnapshotToMap(snapshot);
-		// 	updateCollections(collectionMap);
-		// 	this.setState({ loading: false });
-		// });
+		collectionRef.get().then((snapshot) => {
+			const collectionMap = convertCollectionSnapshotToMap(snapshot);
+			updateCollections(collectionMap);
+			this.setState({ loading: false });
+		});
 	}
 	render() {
 		const { match } = this.props;
