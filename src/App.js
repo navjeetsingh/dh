@@ -7,8 +7,6 @@ import AuthenticationPage from './pages/AuthenticationPage/AuthenticationPage.co
 import HomePage from './pages/HomePage/HomePage.component.js';
 import ShopPage from './pages/ShopPage/ShopPage.component.js';
 import CheckoutPage from './pages/CheckoutPage/CheckoutPage.component.js';
-import { auth, createUserProfileDocument } from './firebase/firebase.utils.js';
-import { setCurrentUser } from './redux/user/user.actions.js';
 import { selectCurrentUser } from './redux/user/user.selectors.js';
 import './App.css';
 
@@ -16,24 +14,7 @@ class App extends Component {
 	unsubscribeFromAuth = null;
 
 	componentDidMount() {
-		const { setCurrentUser } = this.props;
-		// this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-		// 	if (userAuth) {
-		// 		const userRef = await createUserProfileDocument(userAuth);
-
-		// 		userRef.onSnapshot((snapShot) => {
-		// 			setCurrentUser({
-		// 				currentUser: {
-		// 					id: snapShot.id,
-		// 					...snapShot.data(),
-		// 				},
-		// 			});
-		// 		});
-		// 	} else {
-		// 		setCurrentUser(userAuth);
-		// 		//addCollectionAndDocuments('collections',collectionArray.map(({title,items})=> ({title, items})));
-		// 	}
-		// });
+	
 	}
 
 	componentWillUnmount() {
@@ -66,8 +47,5 @@ const mapStateToProps = createStructuredSelector({
 	currentUser: selectCurrentUser,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-	setCurrentUser: (user) => dispatch(setCurrentUser(user)),
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
