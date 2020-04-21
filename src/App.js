@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -8,49 +8,39 @@ import HomePage from './pages/HomePage/HomePage.component.js';
 import ShopPage from './pages/ShopPage/ShopPage.component.js';
 import CheckoutPage from './pages/CheckoutPage/CheckoutPage.component.js';
 import { selectCurrentUser } from './redux/user/user.selectors.js';
-import { checkUserSession } from "./redux/user/user.actions";
+import { checkUserSession } from './redux/user/user.actions';
 import './App.css';
 
-class App extends Component {
-	unsubscribeFromAuth = null;
+const App = ({ checkUserSession, currentUser }) => {
+	useEffect(() => {
+		checkUserSession();
+	}, [checkUserSession]);
 
-	componentDidMount() {
-		const {checkUserSession}= this.props
-		checkUserSession()
-	}
-
-	componentWillUnmount() {
-		this.unsubscribeFromAuth();
-	}
-
-	render() {
-		const { currentUser } = this.props;
-		return (
-			<div>
-				<Header />
-				<Switch>
-					<Route exact path="/" component={HomePage} />
-					<Route path="/shop" component={ShopPage} />
-					<Route exact path="/checkout" component={CheckoutPage} />
-					<Route
-						exact
-						path="/sign-in"
-						render={() =>
-							currentUser ? <Redirect to="/" /> : <AuthenticationPage />
-						}
-					/>
-				</Switch>
-			</div>
-		);
-	}
-}
+	return (
+		<div>
+			<Header />
+			<Switch>
+				<Route exact path="/" component={HomePage} />
+				<Route path="/shop" component={ShopPage} />
+				<Route exact path="/checkout" component={CheckoutPage} />
+				<Route
+					exact
+					path="/sign-in"
+					render={() =>
+						currentUser ? <Redirect to="/" /> : <AuthenticationPage />
+					}
+				/>
+			</Switch>
+		</div>
+	);
+};
 
 const mapStateToProps = createStructuredSelector({
 	currentUser: selectCurrentUser,
 });
 
-const mapDispatchToProps = dispatch =>({
-	checkUserSession: () => dispatch(checkUserSession())
-})
+const mapDispatchToProps = (dispatch) => ({
+	checkUserSession: () => dispatch(checkUserSession()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
