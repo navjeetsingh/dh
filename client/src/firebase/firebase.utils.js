@@ -40,6 +40,19 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 	return userRef;
 };
 
+export const getUserCartRef = async userId => {
+	const cartsRef = firestore.collection('carts').where('userId', '==', userId);
+	const snapShot = await cartsRef.get();
+
+	if(snapShot.empty){
+		const cartDocRef = firebase.collection('carts').doc();
+		await cartDocRef.set({userId, cartItems: []});
+		return cartDocRef;
+	}else {
+		return snapShot.docs[0].ref
+	}
+}
+
 //creating shop collection in Firebase
 export const addCollectionAndDocuments = async (collectionKey, objectToAdd) => {
 	const collectionRef = firestore.collection(collectionKey);
