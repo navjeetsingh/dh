@@ -28,7 +28,7 @@ app.listen(port, (error) => {
 	console.log('Server running on port ' + port);
 });
 
-app.get('/service-worker.js', (req, res) => {
+app.get('/serviceWorker.js', (req, res) => {
 	res.sendFile(path.resolve(__dirname, '..', 'build', 'serviceWorker.js'));
 });
 
