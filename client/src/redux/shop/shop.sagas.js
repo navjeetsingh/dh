@@ -11,7 +11,7 @@ import {
 
 
 
-export function* fetchCollections() {
+export function* fetchCollectionsAsync() {
 	try {
 		const collectionRef = firestore.collection('collections');
 		const snapshot = yield collectionRef.get();
@@ -26,7 +26,7 @@ export function* fetchCollections() {
 }
 
 export function* onFetchCollectionsStart() {
-	yield takeLatest(ShopActionTypes.FETCH_COLLECTIONS_START, fetchCollections);
+	yield takeLatest(ShopActionTypes.FETCH_COLLECTIONS_START, fetchCollectionsAsync);
 }
 
 export function* shopSagas(){
